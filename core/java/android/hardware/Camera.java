@@ -276,10 +276,12 @@ public class Camera {
         if (packageName == null) {
             return true;
         }
-        List<String> packageList = new ArrayList<>(Arrays.asList(
-                SystemProperties.get("vendor.camera.aux.packagelist", packageName).split(",")));
-        List<String> packageBlacklist = new ArrayList<>(Arrays.asList(
-                SystemProperties.get("vendor.camera.aux.packageblacklist", "").split(",")));
+        List<String> packageList = Arrays.asList(
+                SystemProperties.get("vendor.camera.aux.packagelist", packageName).split(","));
+        List<String> packageBlacklist = Arrays.asList(
+                SystemProperties.get("vendor.camera.aux.packageblacklist", "").split(","));
+
+        return packageList.contains(packageName) && !packageBlacklist.contains(packageName);
 
         // Append packages from resources
         Resources res = ActivityThread.currentApplication().getResources();
